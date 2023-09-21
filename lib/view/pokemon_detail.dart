@@ -4,7 +4,7 @@ import 'package:practicaflutter/model/pokemon.dart';
 class PokemonDetail extends StatelessWidget {
   final Pokemon pokemon;
 
-  PokemonDetail({this.pokemon});
+  PokemonDetail({required this.pokemon});
 
   @override
   Widget build(BuildContext context) {

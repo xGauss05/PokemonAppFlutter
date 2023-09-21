@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   // Api: https://github.com/Biuni/PokemonGO-Pokedex
   final url =
       "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
-  PokeManager pManager;
+  PokeManager? pManager;
 
   @override
   void initState() {
@@ -24,7 +24,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   getData() async {
-    var response = await http.get(url);
+    final uri = Uri.parse(url);
+    var response = await http.get(uri);
     var decodedJson = jsonDecode(response.body);
     pManager = PokeManager.fromJson(decodedJson);
     // En el body del build, hacemos una comprobación, en cuando se hayan recogido
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 content: new Text("Jonathan Cacay Llanes",
                     style: new TextStyle(fontFamily: 'Pokemon')),
                 actions: <Widget>[
-                  new FlatButton(
+                  new ElevatedButton(
                     child: new Text("Close",
                         style: new TextStyle(fontFamily: 'Pokemon')),
                     onPressed: () {
@@ -76,10 +77,10 @@ class _HomePageState extends State<HomePage> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-      // Cuadrícula que muestra cada uno de los Pokemon
+          // Cuadrícula que muestra cada uno de los Pokemon
           : GridView.count(
               crossAxisCount: 3,
-              children: pManager.pokemon
+              children: (pManager?.pokemon ?? [])
                   .map((pokemon) => Padding(
                         padding: EdgeInsets.all(2.0),
                         child: GestureDetector(
